@@ -17,7 +17,7 @@ Files in eks folder can be used for further configuration in eks cluster.
 4. service.yaml - to start a load balancing service inside cluster.
 5. prereqs.sh - to get an idea what utilities system should have or can be use in pre-build stage as a fair parallel check.
 
-#Dockerfile
+# Dockerfile
 Used get packages, npm install and exposing port. Whithout this build will not be possible.
 
 #eks.yml
