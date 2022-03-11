@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: devops
+    app.kubernetes.io/instance: devops-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: devops-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops
+  template:
+    metadata:
+      labels:
+        app: devops
+    spec:
+      containers:
+        - image: 234388281854.dkr.ecr.us-east-2.amazonaws.com/devops:latest
+          imagePullPolicy: Always
+          name: devops
+          ports:
+            - containerPort: 5000
