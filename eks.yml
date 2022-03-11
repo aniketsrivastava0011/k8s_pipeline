@@ -6,13 +6,11 @@ phases:
   install:
     commands:
       - echo Installing app dependencies...
-      #- echo 'Check kubectl version'
-      #- kubectl version --short --client
+      - echo Removing any other version of kubectl...
       - yum remove kubeadm kubectl kubelet kubernetes-cni kube*
       - rm -rf /usr/local/bin/kube*
       - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.20.4/2021-04-12/bin/linux/amd64/kubectl
       - chmod +x ./kubectl
-      #- mv ./kubectl $(which kubectl)
       - mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
       - echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
       - echo 'Check kubectl version'
@@ -38,8 +36,9 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...          
-#      - docker build --cache-from $REPOSITORY_URI:$IMAGE_TAG -t $IMAGE_REPO_NAME:$IMAGE_TAG .
-      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker build --cache-from $REPOSITORY_URI:$IMAGE_TAG -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+#     - if build for cache is not permissible from aspects...
+#     - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG 
 
   post_build:
